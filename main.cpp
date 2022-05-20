@@ -17,28 +17,13 @@ bool eliminar(Nodo *&arbol, int valor);
 void mostrar(Nodo *arbol);
 void mostrar(Nodo *arbol, int nivel);
 
-void preOrden(Nodo *arbol, int nivel, int hijos[]);
+void preOrden(Nodo *arbol, int nivel, int caracteres[]);
 
 int main(){
 	
 	Nodo *arbol = NULL;
 	int opc;
 	int aux;
-	
-	/*
-	insertar(arbol, 5);
-	insertar(arbol, 100);
-	insertar(arbol, 3);
-	insertar(arbol, 20);
-	insertar(arbol, 10);
-	insertar(arbol, 2);
-	insertar(arbol, 12);
-	insertar(arbol, 7);
-	insertar(arbol, 4);
-	insertar(arbol, 64);
-	insertar(arbol, 34);
-	*/
-	
 	
 	insertar(arbol, 5);
 	
@@ -62,7 +47,7 @@ int main(){
 	
 	
 	
-	int hijos[10] = {0};
+	int caracteres[10] = {0};
 	
 	do{
 		system("cls");
@@ -92,7 +77,7 @@ int main(){
 				break;
 			case 3:
 				system("cls");
-				preOrden(arbol, 0, hijos);
+				preOrden(arbol, 0, caracteres);
 				break;
 			case 4:
 				mostrar(arbol);
@@ -179,9 +164,9 @@ void mostrar(Nodo *arbol, int nivel){
 	}
 }
 
-void preOrden(Nodo *arbol, int nivel, int hijos[10]){
+void preOrden(Nodo *arbol, int nivel, int caracteres[10]){
 	
-	// 3 - pipe de 2 hijos
+	// 3 - pipe de 2 caracteres
 	// 2 - pipe de continuidad
 	// 1 - pipe de un hijo
 	// 0 - Sin pipe
@@ -192,21 +177,21 @@ void preOrden(Nodo *arbol, int nivel, int hijos[10]){
 		
 		if(nivel > 0)
 		{
-			// Primero hijos[]
+			// Primero caracteres[]
 			for(int i = 0; i < nivel; i++){
-				if(hijos[i] == 3){
-					printf("%c",195);
-					hijos[i]--;
-				}else if(hijos[i] == 2){
-					printf("%c",179);
-				}else if(hijos[i] == 1){
-					printf("%c",192);
-					hijos[i]--;
-				}else if(hijos[i] == 0){
-					printf("%c",255);
+				if(caracteres[i] == 3){
+					printf("%c",195); // Caracter de 2 nodos
+					caracteres[i]--; // Al insertarlo el caracter cambia
+				}else if(caracteres[i] == 2){
+					printf("%c",179); // Caracter de continuidad
+				}else if(caracteres[i] == 1){
+					printf("%c",192); // Caracter de 1 nodo
+					caracteres[i]--; // Al insertarlo el caracter cambia
+				}else if(caracteres[i] == 0){
+					printf("%c",255); //Caracter vacio
 				}
 				
-				// espacios
+				// espacios vacios
 				if(i < nivel - 1){
 					printf("%c",255);
 					printf("%c",255);
@@ -215,7 +200,7 @@ void preOrden(Nodo *arbol, int nivel, int hijos[10]){
 				
 			}
 			
-			// Lineas
+			// Lineas horizontales
 			printf("%c",196);
 			printf("%c",196);
 			printf("%c",196);
@@ -225,16 +210,16 @@ void preOrden(Nodo *arbol, int nivel, int hijos[10]){
 		
 		
 		if(arbol->der != NULL && arbol->izq != NULL){
-			hijos[nivel] = 3;
+			caracteres[nivel] = 3;
 		}else if(arbol->der != NULL || arbol->izq != NULL){
-			hijos[nivel] = 1; 
+			caracteres[nivel] = 1; 
 		}else
-			hijos[nivel] = 0;
+			caracteres[nivel] = 0;
 			
-		preOrden(arbol->der, nivel + 1, hijos);
-		if(hijos[nivel] == 2)
-			hijos[nivel]--;
-		preOrden(arbol->izq, nivel + 1, hijos);
+		preOrden(arbol->der, nivel + 1, caracteres);
+		if(caracteres[nivel] == 2)
+			caracteres[nivel]--;
+		preOrden(arbol->izq, nivel + 1, caracteres);
 		
 	}
 	
